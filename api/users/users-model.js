@@ -19,7 +19,7 @@ function find() {
     ]
    */
   return db('users')
-    .join('roles, users.role_id', 'roles.role_id')
+    .join('roles', 'users.role_id', 'roles.role_id')
     .select('users.user_id', 'users.username', 'roles.role_name');
 }
 
@@ -38,8 +38,13 @@ function findBy(filter) {
     ]
    */
   return db('users')
-    .join('roles, users.role_id', 'roles.role_id')
-    .select('users.user_id', 'users.username', 'users.password', 'roles.name')
+    .join('roles', 'users.role_id', 'roles.role_id')
+    .select(
+      'users.user_id',
+      'users.username',
+      'users.password',
+      'roles.role_name'
+    )
     .where(filter);
 }
 
@@ -55,9 +60,9 @@ function findById(user_id) {
     }
    */
   return db('users')
-    .join('roles, users.role_id', 'roles.role_id')
+    .join('roles', 'users.role_id', 'roles.role_id')
     .select('users.user_id', 'users.username', 'roles.role_name')
-    .where('users.username', user_id)
+    .where('users.user_id', user_id)
     .first();
 }
 
